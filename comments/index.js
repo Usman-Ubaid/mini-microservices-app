@@ -1,12 +1,12 @@
 import express from "express";
 import { v4 as uuid4 } from "uuid";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 const commentsByPostId = {};
-
-// {postid1 : [{commentId, content}, {{commentId, content}}], postid2 : [{commentId, content}, {{commentId, content}}]}
 
 app.get("/posts/:id/comments", (req, res) => {
   const { id } = req.params;

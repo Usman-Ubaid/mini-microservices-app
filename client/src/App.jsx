@@ -1,9 +1,11 @@
 import "./App.css";
+import CreatePost from "./components/CreatePost";
 
 function App() {
   return (
-    <div>
-      <h1>Blog App</h1>
+    <div className="container">
+      <h1>Create Post</h1>
+      <CreatePost />
     </div>
   );
 }
