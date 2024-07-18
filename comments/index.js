@@ -1,6 +1,7 @@
 import express from "express";
 import { v4 as uuid4 } from "uuid";
 import cors from "cors";
+import axios from "axios";
 
 const app = express();
 app.use(express.json());
@@ -15,7 +16,7 @@ app.get("/posts/:id/comments", (req, res) => {
   return res.status(200).send(comments);
 });
 
-app.post("/posts/:id/comments", (req, res) => {
+app.post("/posts/:id/comments", async (req, res) => {
   const commentId = uuid4();
   const { content } = req.body;
 
@@ -23,6 +24,11 @@ app.post("/posts/:id/comments", (req, res) => {
 
   comments.push({ commentId, content });
   commentsByPostId[req.params.id] = comments;
+
+  await axios.post("http://localhost:4005/events", {
+    type: "CommentCreated",
+    data: { commentId, content, postId: req.params.id },
+  });
 
   return res.status(201).send(comments);
 });
