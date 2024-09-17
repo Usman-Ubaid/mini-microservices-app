@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import axios from "axios";
 
 const app = express();
 const port = 4000;
@@ -9,10 +10,18 @@ app.use(cors());
 
 const posts = {};
 
-app.post("/posts", (req, res) => {
+app.post("/posts", async (req, res) => {
   const { title } = req.body;
   const id = Math.floor(Math.random() * 1000);
   posts[id] = { id, title };
+
+  await axios.post("http://localhost:4005/events", {
+    type: "PostCreated",
+    data: {
+      id,
+      title,
+    },
+  });
 
   return res.status(201).send(posts[id]);
 });

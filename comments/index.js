@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import axios from "axios";
 
 const app = express();
 app.use(express.json());
@@ -9,7 +10,7 @@ const port = 4001;
 
 const commentsByPostId = {};
 
-app.post("/posts/:id/comments", (req, res) => {
+app.post("/posts/:id/comments", async (req, res) => {
   const { id } = req.params;
   const { content } = req.body;
 
@@ -21,6 +22,16 @@ app.post("/posts/:id/comments", (req, res) => {
   }
 
   commentsByPostId[id].push(comment);
+
+  await axios.post("http://localhost:4005/events", {
+    type: "CommentCreated",
+    data: {
+      commentId,
+      content,
+      postId: id,
+    },
+  });
+
   return res.status(201).send(commentsByPostId);
 });
 
