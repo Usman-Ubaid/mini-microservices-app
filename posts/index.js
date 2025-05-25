@@ -37,5 +37,6 @@ app.get("/posts", (req, res) => {
 });
 
 app.listen(port, () => {
+  console.log("v20");
   console.log(`Listening on PORT: ${port}`);
 });
