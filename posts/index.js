@@ -15,13 +15,14 @@ app.post("/posts", async (req, res) => {
   const id = Math.floor(Math.random() * 1000);
   posts[id] = { id, title };
 
-  await axios.post("http://localhost:4005/events", {
-    type: "PostCreated",
-    data: {
-      id,
-      title,
-    },
-  });
+  try {
+    await axios.post("http://event-bus-srv:4005/events", {
+      type: "PostCreated",
+      data: { id, title },
+    });
+  } catch (err) {
+    console.error("❌ Failed to notify event bus:", err);
+  }
 
   return res.status(201).send(posts[id]);
 });

@@ -7,15 +7,20 @@ app.use(express.json());
 const port = 4005;
 const events = [];
 
-app.post("/events", (req, res) => {
+app.post("/events", async (req, res) => {
   const event = req.body;
 
   events.push(event);
 
-  axios.post("http://localhost:4000/events", event);
-  axios.post("http://localhost:4001/events", event);
-  axios.post("http://localhost:4002/events", event);
-  axios.post("http://localhost:4003/events", event);
+  try {
+    await axios.post("http://posts-clusterip-srv:4000/events", event);
+    await axios.post("http://comments-srv:4001/events", event);
+    await axios.post("http://query-srv:4002/events", event);
+    await axios.post("http://moderation-srv:4003/events", event);
+  } catch (error) {
+    console.error("Error processing event:", error.message);
+    return res.status(500).send({ error: "Failed to process event" });
+  }
 
   return res.send({ status: "OK" });
 });

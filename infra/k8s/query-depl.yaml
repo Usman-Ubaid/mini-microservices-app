@@ -1,32 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: event-bus-depl
+  name: query-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      apps: event-bus
+      apps: query
   template:
     metadata:
       labels:
-        apps: event-bus
+        apps: query
     spec:
       containers:
-        - name: event-bus
-          image: usmanubaid98/event-bus:latest
+        - name: query
+          image: usmanubaid98/query:latest
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: event-bus-srv
+  name: query-srv
 spec:
   type: ClusterIP
   selector:
-    apps: event-bus
+    apps: query
   ports:
-    - name: event-bus
+    - name: query
       protocol: TCP
-      port: 4005
-      targetPort: 4005
+      port: 4002
+      targetPort: 4002

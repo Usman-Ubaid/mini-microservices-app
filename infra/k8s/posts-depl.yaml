@@ -15,16 +15,15 @@ spec:
       containers:
         - name: posts
           image: usmanubaid98/posts:latest
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: posts-clusterip-src
+  name: posts-clusterip-srv
 spec:
   type: ClusterIP
   selector:
-    app: posts
+    apps: posts
   ports:
     - name: posts
       protocol: TCP
