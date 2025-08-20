@@ -10,7 +10,7 @@ app.use(cors());
 
 const posts = {};
 
-app.post("/posts", async (req, res) => {
+app.post("/posts/create", async (req, res) => {
   const { title } = req.body;
   const id = Math.floor(Math.random() * 1000);
   posts[id] = { id, title };

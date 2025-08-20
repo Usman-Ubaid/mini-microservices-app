@@ -9,7 +9,7 @@ const CreatePost = () => {
     event.preventDefault();
     try {
       const res = await axios.post(
-        "http://posts.com/posts",
+        "http://posts.com/posts/create",
         {
           title,
         },
