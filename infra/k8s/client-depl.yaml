@@ -6,15 +6,17 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      apps: client
+      app: client
   template:
     metadata:
       labels:
-        apps: client
+        app: client
     spec:
       containers:
         - name: client
           image: usmanubaid98/client:latest
+          ports:
+            - containerPort: 5173
 
 ---
 apiVersion: v1
@@ -24,9 +26,9 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    apps: client
+    app: client
   ports:
     - name: client
       protocol: TCP
-      port: 3000
-      targetPort: 3000
+      port: 80
+      targetPort: 5173

@@ -6,11 +6,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      apps: comments
+      app: comments
   template:
     metadata:
       labels:
-        apps: comments
+        app: comments
     spec:
       containers:
         - name: comments
@@ -24,7 +24,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    apps: comments
+    app: comments
   ports:
     - name: comments
       protocol: TCP
