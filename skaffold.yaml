@@ -1,0 +1,57 @@
+apiVersion: skaffold/v4beta13
+kind: Config
+manifests:
+  rawYaml: 
+  - ./infra/k8s/* # Path to your k8s manifests here to watch for changes. 
+build:
+  local:
+    push: false # Set to true if you want to push images to a remote registry. if it's true, sakaffold will push images to the registry/Docker  Hub specified in the image name.
+  artifacts:
+  - image: usmanubaid98/client
+    context: client
+    docker:
+      dockerfile: Dockerfile  
+    sync:
+      manual:
+      - src: 'src/**/*.js'
+        dest: . 
+  - image: usmanubaid98/comments
+    context: comments
+    docker:
+      dockerfile: Dockerfile  
+    sync:
+      manual:
+      - src: '*.js'
+        dest: . 
+  - image: usmanubaid98/event-bus
+    context: event-bus
+    docker:
+      dockerfile: Dockerfile  
+    sync:
+      manual:
+      - src: '*.js'
+        dest: . 
+  - image: usmanubaid98/moderation
+    context: moderation
+    docker:
+      dockerfile: Dockerfile  
+    sync:
+      manual:
+      - src: '*.js'
+        dest: . 
+  - image: usmanubaid98/posts
+    context: posts
+    docker:
+      dockerfile: Dockerfile  
+    sync:
+      manual:
+      - src: '*.js'
+        dest: . 
+  - image: usmanubaid98/query
+    context: query
+    docker:
+      dockerfile: Dockerfile  
+    sync:
+      manual:
+      - src: '*.js'
+        dest: . 

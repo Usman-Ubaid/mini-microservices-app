@@ -33,10 +33,6 @@ app.post("/events", (req, res) => {
   res.send({});
 });
 
-app.get("/posts", (req, res) => {
-  return res.send(posts);
-});
-
 app.listen(port, () => {
   console.log("v20");
   console.log(`Listening on PORT: ${port}`);
